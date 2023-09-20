@@ -40,4 +40,44 @@ function getContent() {
 
 
 
+function getInfo() {
+    for (var i = 9; i <=17; i++) {
+        var index = i - 9;
+        var row = $('<div>').attr('class', 'row time-block');
+        var timeEl = $('<div>').attr('class', 'col-2 hour');
 
+        var textEl = $('<textarea').attr('class', 'col-8 textarea description').attr('data-index', index)
+        var savenBtn = $('<div>').attr('class', 'col-2 saveBtn').append('<i class="fas fa-save fa-2x"></i>');
+        var hourEl; 
+
+        if (i < 12) {
+            hourEl = `${i}am`;
+            timeEl.attr('data-time', i);
+            console.log(timeEl);
+        }   else if (i === 12) {
+            hourEl = `${i} pm`
+            timeEl.attr('data-time', i) 
+        }   else {
+            hourEl = `${i - 12}pm`
+            timeEl.attr('data-time', i)
+        }
+
+
+
+
+
+
+
+
+
+        timeEl.append(hourEl)
+        row.append(timeEl).append(textEl).append(savenBtn);
+        $('.container').append(row);
+        checkHour();
+
+        // localStorage.getItem(`${dailyPlanner[i].hour}`)
+
+    }
+    getContent();
+}
+getInfo();
