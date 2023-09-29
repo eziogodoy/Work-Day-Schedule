@@ -81,3 +81,46 @@ function getInfo() {
     getContent();
 }
 getInfo();
+
+
+
+$('.saveBtn').on('click', function (e) {
+    var valueEl = $(this).siblings('textarea').val();
+    //console.log(valueEl);
+    //attr(data-index)
+    newPlanIndex = $(this).siblings('textarea').data('index');
+    dailyPlanner.splice(newPlanIndex, 1, valueEl);
+
+
+    localStorage.setItem(`plansToday`, JSON.stringify(dailyPlanner));
+});
+
+
+function checkHour() {
+
+    for (var j = 9; j <= 17; j++) {
+        var newIn = j - 9;
+        var element = $('div').find(`[data-time = ${j}]`);
+        var textEl =$('textarea')[newIn]
+
+
+        if (parseInt(element.attr('data-time')) < parseInt(today)) {
+            textEl.classList.add('past')
+            
+        } else if (parseInt(element.attr('data-time')) > parseInt(today)) {
+            textEl.classList.add('future')
+        } else if (parseInt(element.attr('data-time')) == parseInt(today)) {
+            textEl.classList.add('present')
+        }
+    }
+}
+setInterval(checkHour, 30 * 1000);
+
+// clear storage if it is a new day 
+function clearCheck(day) {
+    if (day != localStorage.getItem('weekday')) {
+        localStorage.clear();
+    }
+}
+
+//console.log(localStorage.getItem('weekDay'))
